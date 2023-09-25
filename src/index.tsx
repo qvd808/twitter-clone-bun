@@ -6,12 +6,12 @@ const app = new Elysia()
   .use(html())
   .get("/", ({ html }) => html(
     <BaseHTML>
-      <body class="flex w-full h-screen"
+      <body class="flex w-full h-screen bg-black text-white"
         hx-trigger="load"
         hx-swap="innerHTML"
       >
         <SideBar />
-        <Home posts={db}/>
+        <Home posts={db} />
       </body>
     </BaseHTML>
   ))
@@ -66,20 +66,35 @@ const SideBar = () => {
 
 const Post = (post: Post) => {
   return (
-    <div>
-      {post.text}
-    </div>
+      <div class="w-full mb-4 border border-gray-200 rounded-lg bg-black dark:bg-black dark:border-gray-600">
+        {post.text}
+        </div>
   )
 }
 
-const Home = ({posts}: {posts: Post[]}) => {
+const Home = ({ posts }: { posts: Post[] }) => {
   return (
-    <div>
-      Home
+    <div class="flex flex-col w-2/3">
+      <h3 class="py-4">Home</h3>
+
+      <form>
+        <div class="w-full mb-4 border border-gray-200 rounded-lg bg-black dark:bg-black dark:border-gray-600">
+          <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-black">
+            <label for="comment" class="sr-only">Your comment</label>
+            <textarea id="comment" rows="4" class="w-full px-0 text-xl text-gray-900 bg-white border-none outline-none dark:bg-black focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write a comment..." ></textarea>
+          </div>
+          <div class="flex flex-row-reverse bg-black px-3 py-2 border-none dark:border-gray-600 ">
+            <button class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+              Post comment
+            </button>
+          </div>
+        </div>
+      </form>
+
       {
         posts.map((p) => {
           return (
-            <Post {...p}/>
+            <Post {...p} />
           )
         })
       }
