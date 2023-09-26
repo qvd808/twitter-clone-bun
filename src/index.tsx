@@ -12,6 +12,7 @@ const app = new Elysia()
       >
         <SideBar />
         <Home posts={db} />
+        <RightSideBar />
 
       </body>
     </BaseHTML>
@@ -50,7 +51,8 @@ const BaseHTML = ({ children }: elements.Children) => `
               xl: '1440px',
             },
             colors: {
-              'dark-grey': '#474d51'
+              'dark-grey': '#474d51',
+              'grey': '#212327'
             },
             fontFamily: {
               sans: ['Graphik', 'sans-serif'],
@@ -92,6 +94,18 @@ const db: Post[] = [
   },
 ]
 
+const RightSideBar = () => {
+  return (
+    <div class="flex flex-col w-2/12 bg-black text-white">
+      <div class="mx-4 px-2 border border-dark-grey rounded-lg bg-grey">
+        <input placeholder="Search" class="w-full px-3 text-xl text-gray-900 bg-white outline-none dark:bg-grey focus:ring-0 dark:text-white dark:placeholder-gray-400" />
+
+      </div>
+    </div>
+  )
+
+}
+
 const SideBar = () => {
   return (
     <div class="flex flex-col w-2/12 bg-black text-white">
@@ -125,11 +139,10 @@ const Post = (post: Post) => {
     } else if (time_diff / (1000 * 60 * 60 * 24 * 30) < 12) {
       return `${time_diff / (1000 * 60 * 60 * 24 * 30)} months`
     } else {
-      return `${time_diff / (1000 * 60 * 60 * 24 * 30 * 12)} years`    
+      return `${time_diff / (1000 * 60 * 60 * 24 * 30 * 12)} years`
     }
-    
+
   }
-  test(db[0].created_at)
 
   return (
     <div class="w-full mb-4 p-4 border border-gray-200 rounded-lg bg-black dark:bg-black dark:border-gray-600">
@@ -147,8 +160,11 @@ const Post = (post: Post) => {
 
 const Home = ({ posts }: { posts: Post[] }) => {
   return (
-    <div class="flex flex-col w-2/3">
-      <h3 class="py-4">Home</h3>
+    <div class="flex flex-col w-1/2">
+      <div class="w-full mb-4 p-4 border border-gray-200 rounded-lg bg-black dark:bg-black dark:border-gray-600">
+        <h3 class="py-4">Home</h3>
+
+      </div>
 
       <form>
         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-black dark:bg-black dark:border-gray-600">
