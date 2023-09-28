@@ -1,6 +1,8 @@
 import { Elysia } from "elysia";
 import { html } from "@elysiajs/html"
 import * as elements from "typed-html"
+import { dbPost as db, Post } from "./testdb";
+import { dbHashTag, HashTag } from "./testdb";
 
 const app = new Elysia()
   .use(html())
@@ -52,7 +54,8 @@ const BaseHTML = ({ children }: elements.Children) => `
             },
             colors: {
               'dark-grey': '#474d51',
-              'grey': '#212327'
+              'grey': '#212327',
+              'gray': '#808080',
             },
             fontFamily: {
               sans: ['Graphik', 'sans-serif'],
@@ -66,41 +69,66 @@ const BaseHTML = ({ children }: elements.Children) => `
   </head>
 ${children}
 `;
-type Post = {
-  text: string,
-  user: string,
-  username: string,
-  created_at: Date
-}
-const db: Post[] = [
-  {
-    text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia eaque quibusdam aut molestiae. Impedit, similique. Atque recusandae ad ullam. Rerum, placeat assumenda ipsam in molestiae accusantium natus unde quasi cumque.",
-    user: "CNN",
-    username: "@CNN",
-    created_at: new Date(2023, 8, 26, 12, 30, 0, 0),
-  },
-  {
-    text: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus eaque vitae sit. Sed eum ut velit, deserunt cum animi dolore quasi maxime aspernatur iure. Voluptatibus molestias, possimus quidem repudiandae totam dolore, autem officiis, beatae facilis quo iure porro voluptas excepturi iste sunt repellat facere reiciendis culpa. Sit perferendis porro libero veritatis quae error iure dignissimos corrupti explicabo provident et fuga repellendus quaerat natus ipsam blanditiis laboriosam soluta est esse ratione facilis quidem laudantium, asperiores unde? Sit perferendis corporis asperiores saepe! Pariatur suscipit repudiandae nostrum laborum ipsa reiciendis, error nemo optio eaque commodi voluptates! Expedita quos nostrum, facere nihil, molestiae molestias dolore, perspiciatis voluptatum ipsa deserunt sint cupiditate. Molestias earum enim ut aut facere obcaecati maiores asperiores mollitia expedita! Sunt non maxime itaque, consequuntur voluptatum cumque voluptatem similique possimus, quod eius veritatis nobis soluta, quo mollitia harum exercitationem fugit ipsam distinctio atque temporibus eligendi? Debitis molestiae cumque officiis, impedit aperiam harum repellendus voluptas quo unde nemo laborum deleniti dicta neque modi qui ex! Perferendis, quos. Sapiente accusamus libero sunt corporis quas quidem velit ipsum, cumque maiores magnam fugit sed officia nulla maxime doloremque delectus molestiae iste molestias quae labore omnis quos veniam. Dolore deleniti doloremque velit temporibus? Odit dolore dolores quas?",
-    user: "The New York Times",
-    username: "@nytimes",
-    created_at: new Date(2023, 8, 26, 10, 30, 0, 0),
 
-  },
-  {
-    text: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum, excepturi non consectetur hic consequatur velit perspiciatis ipsum ratione voluptate accusantium autem magnam voluptas alias molestias dolorem quas nesciunt placeat? Quam vel distinctio tempore, nesciunt perspiciatis consectetur officia rerum dolores itaque, repellat cupiditate dolorum, illum dignissimos magni pariatur doloribus ea qui.",
-    user: "Twitter",
-    username: "@Twitter",
-    created_at: new Date(2023, 9, 26, 10, 30, 0, 0),
-  },
-]
+
+const HashTagblock = (hashtag: HashTag) => {
+  return (
+    <div class="my-4">
+      <h5 class="text-gray">Trending in {hashtag.region}</h5>
+      <h4>{hashtag.text}</h4>
+      <h5 class="text-gray">{hashtag.numberOfTweets} Tweets</h5>
+    </div>
+  )
+}
+
+const FollowBlock = (post: Post) => {
+
+  return (
+    <div class="my-4 flex flex-row justify-between">
+      <div class="flex flex-col">
+        <h1 class="text-base">{post.user}</h1>
+        <h1 class="text-sm text-gray">{post.username}</h1>
+      </div>
+      <div class="">
+        <button class="bg-white rounded-2xl px-4 py-1.5 text-sm text-black inline-flex items-center">Follow</button>
+
+      </div>
+    </div>
+  )
+}
 
 const RightSideBar = () => {
   return (
     <div class="flex flex-col w-2/12 bg-black text-white">
-      <div class="mx-4 px-2 border border-dark-grey rounded-lg bg-grey">
+      <div class="my-2 mx-4 px-2 border border-dark-grey rounded-lg bg-grey">
         <input placeholder="Search" class="w-full px-3 text-xl text-gray-900 bg-white outline-none dark:bg-grey focus:ring-0 dark:text-white dark:placeholder-gray-400" />
 
       </div>
+
+      <div class="my-2 mx-4 px-2 border border-dark-grey rounded-lg bg-grey">
+        <h1 class="my-2 text-lg">Trends for you</h1>
+        {
+          dbHashTag.map(hashtag => {
+            return (
+              <HashTagblock {...hashtag} />
+            )
+          })
+        }
+      </div>
+
+      <div class="my-2 mx-4 px-2 border border-dark-grey rounded-lg bg-grey">
+        <h1 class="my-2 text-lg">Who to follow</h1>
+        {
+          db.map(user => {
+            return (
+              <FollowBlock {...user} />
+            )
+          })
+        }
+
+      </div>
+
+
     </div>
   )
 
