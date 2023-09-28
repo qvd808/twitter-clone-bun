@@ -74,9 +74,9 @@ ${children}
 const HashTagblock = (hashtag: HashTag) => {
   return (
     <div class="my-4">
-      <h5 class="text-gray">Trending in {hashtag.region}</h5>
+      <h5 class="text-gray text-sm">Trending in {hashtag.region}</h5>
       <h4>{hashtag.text}</h4>
-      <h5 class="text-gray">{hashtag.numberOfTweets} Tweets</h5>
+      <h5 class="text-gray text-sm">{hashtag.numberOfTweets} Tweets</h5>
     </div>
   )
 }
@@ -173,7 +173,7 @@ const Post = (post: Post) => {
   }
 
   return (
-    <div class="w-full mb-4 p-4 border border-gray-200 rounded-lg bg-black dark:bg-black dark:border-gray-600">
+    <div class="w-full p-4 border border-grey border-t-0 bg-black dark:bg-black dark:border-gray-600">
       <div class="flex flex-col">
         <div class="inline-flex text-justify mb-2">
           <h1 class="font-bold">{post.user}</h1>
@@ -189,14 +189,14 @@ const Post = (post: Post) => {
 const Home = ({ posts }: { posts: Post[] }) => {
   return (
     <div class="flex flex-col w-1/2">
-      <div class="w-full mb-4 p-4 border border-gray-200 rounded-lg bg-black dark:bg-black dark:border-gray-600">
-        <h3 class="py-4">Home</h3>
+      <div class="w-full p-4 border border-grey border-t-0 bg-black dark:bg-black dark:border-gray-600">
+        <h3 class="pb-4">Home</h3>
 
       </div>
 
       <form>
-        <div class="w-full mb-4 border border-gray-200 rounded-lg bg-black dark:bg-black dark:border-gray-600">
-          <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-black">
+        <div class="w-full border border-grey border-t-0 bg-black dark:bg-black dark:border-gray-600">
+          <div class="px-4 py-2 bg-white dark:bg-black">
             <label for="comment" class="sr-only">Your comment</label>
             <textarea spellcheck="false" id="comment" rows="4" class="w-full px-0 text-xl text-gray-900 bg-white outline-none dark:bg-black focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write a comment..." ></textarea>
           </div>
