@@ -9,8 +9,6 @@ const app = new Elysia()
   .get("/", ({ html }) => html(
     <BaseHTML>
       <body class="flex w-full h-screen bg-black text-white"
-        hx-trigger="load"
-        hx-swap="innerHTML"
       >
         <SideBar />
         <Home posts={db} />
