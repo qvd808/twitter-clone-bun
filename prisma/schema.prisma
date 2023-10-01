@@ -11,7 +11,16 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id       String  @id @default(uuid())
+  email    String  @unique
+  name     String
+  username String
+  Tweet    Tweet[]
+}
+
+model Tweet {
+  id     Int    @unique
+  text   String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
