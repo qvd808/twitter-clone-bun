@@ -1,5 +1,5 @@
 type User = {
-    name: String,
-    username: String,
-    email: String,
+    name: string,
+    username: string,
+    email: string,
 }
