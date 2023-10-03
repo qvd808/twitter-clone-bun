@@ -3,6 +3,9 @@ import { html } from "@elysiajs/html"
 import * as elements from "typed-html"
 import { dbPost as db, Post } from "./testdb";
 import { dbHashTag, HashTag } from "./testdb";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
 
 const app = new Elysia()
   .use(html())
@@ -17,6 +20,24 @@ const app = new Elysia()
       </body>
     </BaseHTML>
   ))
+  .get("/tweets", async () => {
+    const random_tweets = await prisma.$queryRaw
+            `
+        SELECT T.text, U.username
+        FROM Tweet T, User U
+        WHERE T.userId = U.id
+        ORDER BY RANDOM()
+        LIMIT 3;
+        `
+
+    console.log(typeof(random_tweets))
+    // return (
+    //   <div>
+    //     <Home post={random_tweets}/>
+    //   </div>
+    // )
+    return {random_tweets, test: typeof(random_tweets)}
+  })
   .listen(3000)
 
 console.log(

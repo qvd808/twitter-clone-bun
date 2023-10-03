@@ -3,3 +3,8 @@ type User = {
     username: string,
     email: string,
 }
+
+type Tweet = {
+    text: string,
+    userId: string
+}
