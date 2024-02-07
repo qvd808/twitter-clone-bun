@@ -3,8 +3,8 @@ import { html } from "@elysiajs/html"
 import * as elements from "typed-html"
 import { dbPost as db, Post } from "./testdb";
 import { dbHashTag, HashTag } from "./testdb";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+// import { PrismaClient } from "@prisma/client";
+// const prisma = new PrismaClient();
 
 
 const app = new Elysia()
